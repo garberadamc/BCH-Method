@@ -1,0 +1,30 @@
+TITLE:
+Step1_bch_automation - LSAY
+DATA:
+FILE = "/Users/agarber/github/BCH-Method/bch_mplus/step1_bch.dat";
+ 
+VARIABLE:
+NAMES = rand LSAYID REGION URBAN gender MOTHED FATHED RACETH math_irt enjoy good
+     undrstnd nervous scared useful logical job adult female; 
+ MISSING=.;
+ categorical = enjoy-adult; 
+   
+    usevar = enjoy-adult;
+    
+    classes = c(5); 
+    
+    !!! NOTE: All auxiliary variables to be considered in the final model should be listed here !!!
+    auxiliary = 
+    math_irt female;
+ANALYSIS:
+estimator = mlr; 
+    type = mixture; 
+    starts = 500 100;
+SAVEDATA:
+File=bch_lsay_092021.dat;
+    save=bchweights; !!!!!!! NEW !!!!1!!
+    format=free;
+    Missflag= 9999;
+PLOT:
+type = plot3; 
+    series = enjoy-adult(*);

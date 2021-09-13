@@ -1,0 +1,608 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+09/10/2021   2:23 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Step2_bch_automation LSAY
+  DATA:
+  FILE = "/Users/agarber/Desktop/Aux-MplusAuto/bch_mplus/step2_bch_moderation.dat";
+
+  VARIABLE:
+  NAMES = ENJOY GOOD UNDRSTND NERVOUS SCARED USEFUL LOGICAL JOB ADULT MATH_IRT FEMALE
+       BCHW1 BCHW2 BCHW3 BCHW4 BCHW5 CPROB1 CPROB2 CPROB3 CPROB4 CPROB5 N;
+   MISSING=.;
+   usevar = BCHW1-BCHW5 math_irt female;
+    missing are all (9999);
+    classes = c(5);
+    training = BCHW1-BCHW5(bch); !!!! NEW !!!!!!!!
+  DEFINE:
+  center female (grandmean);
+  ANALYSIS:
+  estimator = mlr;
+    type = mixture;
+    starts = 0;
+  MODEL:
+  !!! DISTAL = math_irt  !!!
+  !!! MODERATOR = female !!!
+
+  %OVERALL%
+
+  c on female;
+  math_irt on female;
+  math_irt;
+
+  %C#1%
+
+  [math_irt] (m1);
+  math_irt;
+  math_irt on female (s1);
+
+  %C#2%
+
+  [math_irt] (m2);
+  math_irt;
+  math_irt on female (s2);
+
+  %C#3%
+
+  [math_irt] (m3);
+  math_irt;
+  math_irt on female (s3);
+
+  %C#4%
+
+  [math_irt] (m4);
+  math_irt;
+  math_irt on female (s4);
+
+  %C#5%
+
+  [math_irt] (m5);
+  math_irt;
+  math_irt on female (s5);
+  MODEL CONSTRAINT:
+  New (diff12 diff13 diff14 diff15
+         diff23 diff24 diff25
+         diff34 diff35 diff45
+         slope12 slope13 slope14 slope15
+         slope23 slope24 slope25
+         slope34 slope35 slope45);
+
+    diff12 = m1-m2;   diff24 = m2-m4;
+    diff13 = m1-m3;   diff25 = m2-m5;
+    diff14 = m1-m4;   diff34 = m3-m4;
+    diff15 = m1-m5;   diff35 = m3-m5;
+    diff23 = m2-m3;   diff45 = m4-m5;
+
+    slope12 = s1-s2;   slope24 = s2-s4;
+    slope13 = s1-s3;   slope25 = s2-s5;
+    slope14 = s1-s4;   slope34 = s3-s4;
+    slope15 = s1-s5;   slope35 = s3-s5;
+    slope23 = s2-s3;   slope45 = s4-s5;
+  MODEL TEST:
+  m1=m2;       !!! Distal outcome omnibus Wald test for `math_irt` !!!
+    m2=m3;
+    m3=m4;
+    m4=m5;
+
+    !s1=s2;      !!! Slope difference omnibus Wald test `math_irt on female` !!!
+    !s2=s3;
+    !s3=s4;
+    !s4=s5;
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables except
+  x-variables.  These cases were not included in the analysis.
+  Number of cases with missing on all variables except x-variables:  612
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Step2_bch_automation LSAY
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2063
+
+Number of dependent variables                                    1
+Number of independent variables                                  1
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Continuous
+   MATH_IRT
+
+Observed independent variables
+   FEMALE
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  Training variables (BCH)
+   BCHW1       BCHW2       BCHW3       BCHW4       BCHW5
+
+  Centering (GRANDMEAN)
+   FEMALE
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+
+Input data file(s)
+  /Users/agarber/Desktop/Aux-MplusAuto/bch_mplus/step2_bch_moderation.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+     Number of y missing data patterns           1
+     Number of u missing data patterns           0
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              MATH_IRT      FEMALE
+              ________      ________
+ MATH_IRT       1.000
+ FEMALE         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     MATH_IRT             58.829      -0.068      26.570    0.05%      47.240     55.710     59.290
+            2063.000     157.729      -0.541      94.190    0.05%      62.900     70.160
+     FEMALE                0.000       0.011      -0.497   50.27%      -0.497     -0.497     -0.497
+            2063.000       0.250      -2.000       0.503   49.73%       0.503      0.503
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       23
+
+Loglikelihood
+
+          H0 Value                      -10946.550
+          H0 Scaling Correction Factor      1.5545
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   21939.100
+          Bayesian (BIC)                 22068.634
+          Sample-Size Adjusted BIC       21995.561
+            (n* = (n + 2) / 24)
+
+Wald Test of Parameter Constraints
+
+          Value                            224.987
+          Degrees of Freedom                     4
+          P-Value                           0.0000
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1        323.48595          0.15680
+       2        869.10457          0.42128
+       3        216.68246          0.10503
+       4        230.00469          0.11149
+       5        423.72232          0.20539
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1        323.48595          0.15680
+       2        869.10457          0.42128
+       3        216.68246          0.10503
+       4        230.00469          0.11149
+       5        423.72232          0.20539
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1              326          0.15802
+       2              911          0.44159
+       3              217          0.10519
+       4              205          0.09937
+       5              404          0.19583
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3        4        5
+
+    1   1.219    -.030    -.044    -.065    -.080
+    2   -.022    1.091    0.003    -.014    -.058
+    3   -.068    0.014    1.147    0.007    -.100
+    4   -.061    -.276    0.004    1.404    -.071
+    5   -.066    -.152    -.053    -.063    1.334
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3        4        5
+
+    1   1.229    -.062    -.046    -.039    -.082
+    2   -.011    1.144    0.003    -.065    -.071
+    3   -.066    0.013    1.149    0.004    -.099
+    4   -.092    -.055    0.007    1.252    -.111
+    5   -.062    -.125    -.051    -.034    1.272
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3        4        5
+
+    1     14.021    0.000    0.000    0.000    0.000
+    2      0.000   13.950    8.159    0.000    0.000
+    3      0.000    9.442   13.954    8.240    0.000
+    4      0.000    0.000    8.795   14.040    0.000
+    5    -14.056  -14.056  -14.056  -14.056    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ MATH_IRT   ON
+    FEMALE            -4.147      1.642     -2.526      0.012
+
+ Intercepts
+    MATH_IRT          53.225      0.819     64.994      0.000
+
+ Residual Variances
+    MATH_IRT         101.456      9.827     10.325      0.000
+
+Latent Class 2
+
+ MATH_IRT   ON
+    FEMALE             1.820      0.898      2.026      0.043
+
+ Intercepts
+    MATH_IRT          63.823      0.449    142.302      0.000
+
+ Residual Variances
+    MATH_IRT         122.314      6.813     17.953      0.000
+
+Latent Class 3
+
+ MATH_IRT   ON
+    FEMALE            -5.621      1.982     -2.835      0.005
+
+ Intercepts
+    MATH_IRT          52.836      0.992     53.289      0.000
+
+ Residual Variances
+    MATH_IRT         162.138     14.100     11.499      0.000
+
+Latent Class 4
+
+ MATH_IRT   ON
+    FEMALE            -2.467      2.328     -1.060      0.289
+
+ Intercepts
+    MATH_IRT          53.606      1.166     45.978      0.000
+
+ Residual Variances
+    MATH_IRT         155.613     15.198     10.239      0.000
+
+Latent Class 5
+
+ MATH_IRT   ON
+    FEMALE            -2.264      1.573     -1.439      0.150
+
+ Intercepts
+    MATH_IRT          58.690      0.786     74.684      0.000
+
+ Residual Variances
+    MATH_IRT         154.619     12.445     12.424      0.000
+
+Categorical Latent Variables
+
+ C#1        ON
+    FEMALE            -0.817      0.207     -3.954      0.000
+
+ C#2        ON
+    FEMALE            -0.135      0.158     -0.854      0.393
+
+ C#3        ON
+    FEMALE             0.163      0.215      0.761      0.447
+
+ C#4        ON
+    FEMALE             0.393      0.234      1.681      0.093
+
+ Intercepts
+    C#1               -0.327      0.103     -3.173      0.002
+    C#2                0.720      0.079      9.089      0.000
+    C#3               -0.679      0.107     -6.321      0.000
+    C#4               -0.642      0.117     -5.480      0.000
+
+New/Additional Parameters
+    DIFF12           -10.597      0.947    -11.196      0.000
+    DIFF13             0.389      1.340      0.290      0.771
+    DIFF14            -0.381      1.480     -0.257      0.797
+    DIFF15            -5.465      1.195     -4.574      0.000
+    DIFF23            10.987      1.082     10.156      0.000
+    DIFF24            10.217      1.301      7.851      0.000
+    DIFF25             5.132      0.961      5.342      0.000
+    DIFF34            -0.770      1.519     -0.507      0.612
+    DIFF35            -5.854      1.333     -4.391      0.000
+    DIFF45            -5.084      1.464     -3.472      0.001
+    SLOPE12           -5.966      1.897     -3.145      0.002
+    SLOPE13            1.474      2.683      0.549      0.583
+    SLOPE14           -1.680      2.959     -0.568      0.570
+    SLOPE15           -1.883      2.394     -0.787      0.432
+    SLOPE23            7.440      2.164      3.439      0.001
+    SLOPE24            4.287      2.599      1.649      0.099
+    SLOPE25            4.084      1.923      2.123      0.034
+    SLOPE34           -3.154      3.035     -1.039      0.299
+    SLOPE35           -3.357      2.667     -1.259      0.208
+    SLOPE45           -0.203      2.926     -0.069      0.945
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.730E-04
+       (ratio of smallest to largest eigenvalue)
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Categorical Latent Variables
+
+ C#1      ON
+    FEMALE             0.442      0.091      0.295      0.662
+
+ C#2      ON
+    FEMALE             0.873      0.138      0.640      1.191
+
+ C#3      ON
+    FEMALE             1.177      0.253      0.773      1.793
+
+ C#4      ON
+    FEMALE             1.482      0.347      0.937      2.344
+
+
+ALTERNATIVE PARAMETERIZATIONS FOR THE CATEGORICAL LATENT VARIABLE REGRESSION
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Parameterization using Reference Class 1
+
+ C#2      ON
+    FEMALE             0.681      0.170      3.997      0.000
+
+ C#3      ON
+    FEMALE             0.980      0.227      4.314      0.000
+
+ C#4      ON
+    FEMALE             1.210      0.247      4.889      0.000
+
+ C#5      ON
+    FEMALE             0.817      0.207      3.954      0.000
+
+ Intercepts
+    C#2                1.048      0.085     12.312      0.000
+    C#3               -0.352      0.114     -3.097      0.002
+    C#4               -0.315      0.124     -2.542      0.011
+    C#5                0.327      0.103      3.173      0.002
+
+Parameterization using Reference Class 2
+
+ C#1      ON
+    FEMALE            -0.681      0.170     -3.997      0.000
+
+ C#3      ON
+    FEMALE             0.299      0.175      1.707      0.088
+
+ C#4      ON
+    FEMALE             0.529      0.209      2.534      0.011
+
+ C#5      ON
+    FEMALE             0.135      0.158      0.854      0.393
+
+ Intercepts
+    C#1               -1.048      0.085    -12.312      0.000
+    C#3               -1.399      0.088    -15.984      0.000
+    C#4               -1.362      0.104    -13.044      0.000
+    C#5               -0.720      0.079     -9.089      0.000
+
+Parameterization using Reference Class 3
+
+ C#1      ON
+    FEMALE            -0.980      0.227     -4.314      0.000
+
+ C#2      ON
+    FEMALE            -0.299      0.175     -1.707      0.088
+
+ C#4      ON
+    FEMALE             0.230      0.241      0.953      0.341
+
+ C#5      ON
+    FEMALE            -0.163      0.215     -0.761      0.447
+
+ Intercepts
+    C#1                0.352      0.114      3.097      0.002
+    C#2                1.399      0.088     15.984      0.000
+    C#4                0.037      0.121      0.306      0.759
+    C#5                0.679      0.107      6.321      0.000
+
+Parameterization using Reference Class 4
+
+ C#1      ON
+    FEMALE            -1.210      0.247     -4.889      0.000
+
+ C#2      ON
+    FEMALE            -0.529      0.209     -2.534      0.011
+
+ C#3      ON
+    FEMALE            -0.230      0.241     -0.953      0.341
+
+ C#5      ON
+    FEMALE            -0.393      0.234     -1.681      0.093
+
+ Intercepts
+    C#1                0.315      0.124      2.542      0.011
+    C#2                1.362      0.104     13.044      0.000
+    C#3               -0.037      0.121     -0.306      0.759
+    C#5                0.642      0.117      5.480      0.000
+
+
+ODDS RATIO FOR THE ALTERNATIVE PARAMETERIZATIONS FOR THE CATEGORICAL LATENT VARIABLE REGRESSION
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Parameterization using Reference Class 1
+
+ C#2      ON
+    FEMALE             1.976      0.337      1.415      2.761
+
+ C#3      ON
+    FEMALE             2.664      0.605      1.707      4.158
+
+ C#4      ON
+    FEMALE             3.353      0.830      2.064      5.446
+
+ C#5      ON
+    FEMALE             2.263      0.467      1.510      3.392
+
+Parameterization using Reference Class 2
+
+ C#1      ON
+    FEMALE             0.506      0.086      0.362      0.707
+
+ C#3      ON
+    FEMALE             1.348      0.236      0.957      1.899
+
+ C#4      ON
+    FEMALE             1.697      0.354      1.127      2.553
+
+ C#5      ON
+    FEMALE             1.145      0.181      0.839      1.562
+
+Parameterization using Reference Class 3
+
+ C#1      ON
+    FEMALE             0.375      0.085      0.240      0.586
+
+ C#2      ON
+    FEMALE             0.742      0.130      0.527      1.045
+
+ C#4      ON
+    FEMALE             1.259      0.304      0.784      2.020
+
+ C#5      ON
+    FEMALE             0.849      0.182      0.558      1.294
+
+Parameterization using Reference Class 4
+
+ C#1      ON
+    FEMALE             0.298      0.074      0.184      0.484
+
+ C#2      ON
+    FEMALE             0.589      0.123      0.392      0.887
+
+ C#3      ON
+    FEMALE             0.795      0.192      0.495      1.275
+
+ C#5      ON
+    FEMALE             0.675      0.158      0.427      1.068
+
+
+     Beginning Time:  14:23:23
+        Ending Time:  14:23:23
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen
